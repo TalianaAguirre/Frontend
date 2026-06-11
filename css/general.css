@@ -9,40 +9,46 @@
   box-sizing:border-box;
 }
 
-.header h1 {
+h1 {
     font-family: 'Klarinda Playful Personal', serif;
     font-size: 3rem;
     font-weight: 800;
+    color: white;
 }
-
-.header{
-  background-image: url('../recursos/header.jpg');
-  background-size: cover;
-  background-position: center;
-  color: rgb(255, 255, 255);
-  padding: 20px 32px;
-  display: flex;
-  flex-direction:column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
 .subtitulo {
   font-size: 1.5rem;
   margin-top: 4px;
+  color:white;
+
 }
 
 body {
-  background-color: #dcdfbef3;
   min-height: 100vh;
   display: flex;
   flex-direction: column;  
   font-family: 'Cormorant Garamond', serif;
+  background-image: url('../recursos/header.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before{
+  content: '';
+  position: fixed;
+  inset:0 ;
+  background: rgba(5,5,5,0.57);
+  z-index:0;
 }
 
 main{
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 80vh;
 }
+
