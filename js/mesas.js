@@ -46,9 +46,12 @@ const mostrarMesas = () => {
 const consultarMesas = async () => {
     try {
         if (mesas.length > 0) mesas.splice(0, mesas.length);
+        console.log(getToken());
+
         const response = await fetch('http://127.0.0.1:8002/api/mesas', {
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
+        console.log(response);
         const body = await response.json();
         body.mesas.forEach(item => mesas.push(item));
         mostrarMesas();
