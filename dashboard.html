@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="interior">
+
+    <nav class="navbar">
+        <span class="navbar-marca">Restaurante XYZ</span>
+        <div class="navbar-links">
+            <a href="paginas/mesas.html">Mesas</a>
+            <a href="paginas/reservas.html">Reservas</a>
+            <a href="paginas/productos.html">Productos</a>
+            <a href="paginas/pedidos.html">Pedidos</a>
+        </div>
+        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="dashboard-header">
+            <p class="bienvenida">Bienvenido,</p>
+            <h1 id="nombreUsuario">—</h1>
+        </div>
+
+        <div class="tarjetas">
+            <a href="paginas/mesas.html" class="tarjeta">
+                <p class="tarjeta-label">Módulo</p>
+                <h2>Mesas</h2>
+                <p class="tarjeta-desc">Gestión de mesas y estados</p>
+            </a>
+            <a href="paginas/reservas.html" class="tarjeta">
+                <p class="tarjeta-label">Módulo</p>
+                <h2>Reservas</h2>
+                <p class="tarjeta-desc">Registro y seguimiento de reservas</p>
+            </a>
+            <a href="paginas/productos.html" class="tarjeta">
+                <p class="tarjeta-label">Módulo</p>
+                <h2>Productos</h2>
+                <p class="tarjeta-desc">Menú y disponibilidad</p>
+            </a>
+            <a href="paginas/pedidos.html" class="tarjeta">
+                <p class="tarjeta-label">Módulo</p>
+                <h2>Pedidos</h2>
+                <p class="tarjeta-desc">Control de pedidos activos</p>
+            </a>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

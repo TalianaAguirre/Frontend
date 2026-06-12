@@ -7,38 +7,32 @@
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/auth.css">
 </head>
-<body>
-    
+<body class="login">
     
     <main class="page-content">
         <div class="content">
-         <h1>Restaurante XYZ</h1>
-         <p class="subtitulo"> Inicie sesión para comenzar</p>
-    
+            <h1>Restaurante XYZ</h1>
+            <p class="subtitulo">Inicie sesión para comenzar</p>
 
             <form name="inicioForm" class="formulario" id="loginform">
                 <h2 class="form-titulo">Inicio de sesión</h2>
                 <div>
-                    <label for="correo/user">Correo electrónico o nombre de usuario</label>
-                    <input type="text" id="correo/user" name="login_user" placeholder="Ej:user o user@correo.com" required>
+                    <label for="login_user">Correo electrónico o nombre de usuario</label>
+                    <input type="text" id="login_user" name="login_user" placeholder="Ej:user o user@correo.com">
                     <p id="msgUsuario" class="inputError">Campo obligatorio</p>
                 </div>
                 <div>
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña">
                     <p id="msgContrasena" class="inputError">Campo obligatorio</p>
                 </div>
                 <div class="botones">
-                    <button type="submit">Iniciar sesión</button>
-                    <button type="reset">Cancelar</button>
+                    <button type="submit" class="btn-dorado">Iniciar sesión</button>
+                    <button type="reset" class="btn-outline">Cancelar</button>
                 </div>
-
             </form>
-
         </div>
-
     </main>
     <script src="js/auth.js"></script>
-
 </body>
 </html>

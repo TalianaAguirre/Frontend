@@ -1,27 +1,87 @@
-.formulario{
-  width: 450px;
-  padding: 40px;
-  background: rgb(20 20 20 / 78%);
-  border: 1px solid rgba(216, 211, 179, 0.2);
-  border-radius: 25px;
-  color: white;
-  line-height:3.5;
-  box-shadow: 0 0 25px rgba(0,0,0,.6);
+main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: 'Klarinda Playful Personal', serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+}
+
+.subtitulo {
+    font-size: 1.5rem;
+    margin-top: 4px;
+    color: white;
+}
+
+.formulario {
+    width: 450px;
+    padding: 40px;
+    background: rgb(20 20 20 / 78%);
+    border: 1px solid rgba(216, 211, 179, 0.2);
+    border-radius: 25px;
+    color: white;
+    line-height: 3.5;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
 }
 
 input {
-  width: 100%;
-  padding: 12px 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  color: white;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.25s, box-shadow 0.25s;
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
 }
 
 input:focus {
-  border-color: rgba(212, 183, 120, 0.7);
-  box-shadow: 0 0 0 3px rgba(212, 183, 120, 0.12);
+    border-color: rgba(212, 183, 120, 0.7);
+    box-shadow: 0 0 0 3px rgba(212, 183, 120, 0.12);
+}
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-dorado {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #c9a84c, #a8722a);
+    border: none;
+    border-radius: 8px;
+    color: #0c0c0c;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-outline {
+    padding: 10px 24px;
+    background: none;
+    border: 1px solid rgba(212, 183, 120, 0.3);
+    border-radius: 8px;
+    color: rgba(212, 183, 120, 0.8);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.inputError {
+    font-size: 0.75rem;
+    color: #e07070;
+    display: none;
 }
