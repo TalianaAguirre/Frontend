@@ -1,6 +1,5 @@
 /* definición de variables */
 const productos = [];
-
 const productosTabla = document.getElementById('productosTB');
 
 /* definición de métodos o funciones */

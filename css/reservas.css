@@ -1,0 +1,4 @@
+/* ─── Reservas: columna del form un poco más ancha ── */
+.contenido-pagina.reservas-layout {
+    grid-template-columns: 380px 1fr;
+}
