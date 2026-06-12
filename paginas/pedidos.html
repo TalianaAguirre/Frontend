@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,93 @@
     <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/pedidos.css">
 </head>
-<body>
-    
-    <header class="header">
-        <h1>Restaurante XYZ</h1>
-        <p class="subtitulo"> Inicie sesión para comenzar</p>
-    </header>
-    
+<body class="interior">
+
+    <nav class="navbar">
+        <span class="navbar-marca">Restaurante XYZ</span>
+        <div class="navbar-links">
+            <a href="mesas.html">Mesas</a>
+            <a href="reservas.html">Reservas</a>
+            <a href="productos.html">Productos</a>
+            <a href="pedidos.html" class="activo">Pedidos</a>
+        </div>
+        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </nav>
+
+    <main class="pagina-main">
+
+        <div class="pagina-header">
+            <h1>Pedidos</h1>
+            <button class="btn-dorado" id="btnNuevo">+ Nuevo pedido</button>
+        </div>
+
+        <div class="contenido-pagina">
+
+            <form name="pedidoForm" class="formulario-interno" id="pedidoForm">
+                <h2 class="form-titulo" id="formTitulo">Nuevo pedido</h2>
+
+                <div class="campo">
+                    <label for="mesa_id">Mesa</label>
+                    <select name="mesa_id" id="mesa_id">
+                        <option value="">— Seleccionar mesa —</option>
+                    </select>
+                    <p id="msgMesa" class="inputError">Seleccione una mesa</p>
+                </div>
+
+                <div class="campo">
+                    <label>Productos</label>
+                    <div id="listaProductos"></div>
+                    <button type="button" class="btn-outline" id="btnAgregarProducto" style="margin-top:8px;width:100%">+ Agregar producto</button>
+                    <p id="msgProductos" class="inputError">Agregue al menos un producto</p>
+                </div>
+
+                <div style="font-size:0.9rem; color:rgba(212,183,120,0.8); line-height:1.8">
+                    <span>Subtotal: <strong id="subtotal">$0</strong></span><br>
+                    <span>Total: <strong id="total">$0</strong></span>
+                </div>
+
+                <div class="botones-form">
+                    <button type="submit" class="btn-dorado">Guardar</button>
+                    <button type="reset" class="btn-outline">Cancelar</button>
+                </div>
+            </form>
+
+            <div>
+                <div class="filtros">
+                    <select id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en_preparacion">En preparación</option>
+                        <option value="entregado">Entregado</option>
+                        <option value="pagado">Pagado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                    <button class="btn-outline" id="btnFiltrar">Buscar</button>
+                </div>
+
+                <table id="pedidosTB">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mesa</th>
+                            <th>Productos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../js/pedidos.js"></script>
+    <script src="../js/pedidos_form.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

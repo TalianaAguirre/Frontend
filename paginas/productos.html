@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,105 @@
     <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/productos.css">
 </head>
-<body>
-    
-    <header class="header">
-        <h1>Restaurante XYZ</h1>
-        <p class="subtitulo"> Inicie sesión para comenzar</p>
-    </header>
-    
+<body class="interior">
+
+    <nav class="navbar">
+        <span class="navbar-marca">Restaurante XYZ</span>
+        <div class="navbar-links">
+            <a href="mesas.html">Mesas</a>
+            <a href="reservas.html">Reservas</a>
+            <a href="productos.html" class="activo">Productos</a>
+            <a href="pedidos.html">Pedidos</a>
+        </div>
+        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </nav>
+
+    <main class="pagina-main">
+
+        <div class="pagina-header">
+            <h1>Productos</h1>
+            <button class="btn-dorado" id="btnNuevo">+ Nuevo producto</button>
+        </div>
+
+        <div class="contenido-pagina">
+
+            <form name="productoForm" class="formulario-interno" id="productoForm">
+                <h2 class="form-titulo" id="formTitulo">Nuevo producto</h2>
+
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ej: Empanada de carne">
+                    <p id="msgNombre" class="inputError">Campo obligatorio</p>
+                </div>
+
+                <div class="campo">
+                    <label for="categoria_id">Categoría</label>
+                    <select name="categoria_id" id="categoria_id">
+                        <option value="">— Seleccionar —</option>
+                    </select>
+                    <p id="msgCategoria" class="inputError">Seleccione una categoría</p>
+                </div>
+
+                <div class="campo">
+                    <label for="precio">Precio</label>
+                    <input type="number" name="precio" id="precio" placeholder="Ej: 15000" min="1">
+                    <p id="msgPrecio" class="inputError">Debe ser mayor a cero</p>
+                </div>
+
+                <div class="campo">
+                    <label for="descripcion">Descripción</label>
+                    <textarea name="descripcion" id="descripcion" placeholder="Descripción opcional"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="disponible">Disponibilidad</label>
+                    <select name="disponible" id="disponible">
+                        <option value="1">Disponible</option>
+                        <option value="0">No disponible</option>
+                    </select>
+                </div>
+
+                <div class="botones-form">
+                    <button type="submit" class="btn-dorado">Guardar</button>
+                    <button type="reset" class="btn-outline">Cancelar</button>
+                </div>
+            </form>
+
+            <div>
+                <div class="filtros">
+                    <select id="filtroCategoria">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                    <select id="filtroDisponible">
+                        <option value="">Disponibilidad</option>
+                        <option value="true">Disponible</option>
+                        <option value="false">No disponible</option>
+                    </select>
+                    <button class="btn-outline" id="btnFiltrar">Buscar</button>
+                </div>
+
+                <table id="productosTB">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Disponible</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../js/productos.js"></script>
+    <script src="../js/productos_form.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>
