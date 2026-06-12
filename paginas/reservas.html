@@ -1,18 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservaciones</title>
-    <link rel="stylesheet" href="css\general.css">
-    <link rel="stylesheet" href="css\reservas.css">
+    <title>Reservas — Restaurante XYZ</title>
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/mesas.css">
+    <link rel="stylesheet" href="../css/reservas.css">
 </head>
-<body>
-    
-    <header class="header">
-        <h1>Restaurante XYZ</h1>
-        <p class="subtitulo"> Inicie sesión para comenzar</p>
-    </header>
-    
+<body class="interior">
+
+    <nav class="navbar">
+        <span class="navbar-marca">Restaurante XYZ</span>
+        <div class="navbar-links">
+            <a href="mesas.html">Mesas</a>
+            <a href="reservas.html" class="activo">Reservas</a>
+            <a href="productos.html">Productos</a>
+            <a href="pedidos.html">Pedidos</a>
+        </div>
+        <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </nav>
+
+    <main class="pagina-main">
+
+        <div class="pagina-header">
+            <h1>Reservas</h1>
+            <button class="btn-dorado" id="btnNueva">+ Nueva reserva</button>
+        </div>
+
+        <div class="contenido-pagina reservas-layout">
+
+            <!-- ── Formulario ── -->
+            <form name="reservaForm" class="formulario-interno" id="reservaForm">
+                <h2 class="form-titulo" id="formTitulo">Nueva reserva</h2>
+
+                <div class="campo">
+                    <label for="nombre_cliente">Nombre del cliente</label>
+                    <input type="text" name="nombre_cliente" id="nombre_cliente" placeholder="Ej: Carlos Pérez">
+                    <p id="msgNombre" class="inputError">Campo obligatorio</p>
+                </div>
+
+                <div class="campo">
+                    <label for="telefono_cliente">Teléfono</label>
+                    <input type="text" name="telefono_cliente" id="telefono_cliente" placeholder="Ej: 3001234567">
+                    <p id="msgTelefono" class="inputError">Campo obligatorio</p>
+                </div>
+
+                <div class="campo">
+                    <label for="cantidad_personas">Número de personas</label>
+                    <input type="number" name="cantidad_personas" id="cantidad_personas" placeholder="Ej: 4" min="1">
+                    <p id="msgPersonas" class="inputError">Debe ser mayor a cero</p>
+                </div>
+
+                <div class="campo">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" name="fecha" id="fecha">
+                    <p id="msgFecha" class="inputError">Campo obligatorio</p>
+                </div>
+
+                <div class="campo">
+                    <label for="hora">Hora</label>
+                    <input type="time" name="hora" id="hora">
+                    <p id="msgHora" class="inputError">Campo obligatorio</p>
+                </div>
+
+                <div class="campo">
+                    <label for="mesa_id">Mesa</label>
+                    <select name="mesa_id" id="mesa_id">
+                        <option value="">— Seleccionar mesa —</option>
+                    </select>
+                    <p id="msgMesa" class="inputError">Seleccione una mesa</p>
+                </div>
+
+                <div class="campo">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea name="observaciones" id="observaciones" placeholder="Ej: Cumpleaños, alergias..."></textarea>
+                </div>
+
+                <div class="botones-form">
+                    <button type="submit" class="btn-dorado">Guardar</button>
+                    <button type="reset" class="btn-outline">Cancelar</button>
+                </div>
+            </form>
+
+            <!-- ── Panel derecho: filtros + tabla ── -->
+            <div>
+                <div class="filtros">
+                    <input type="date" id="filtroFecha" placeholder="Filtrar por fecha" title="Fecha">
+                    <input type="text" id="filtroCliente" placeholder="Buscar cliente">
+                    <select id="filtroEstado">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmada">Confirmada</option>
+                        <option value="cancelada">Cancelada</option>
+                        <option value="finalizada">Finalizada</option>
+                    </select>
+                    <button class="btn-outline" id="btnFiltrar">Buscar</button>
+                </div>
+
+                <table id="reservasTB">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Personas</th>
+                            <th>Mesa</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../js/reservas.js"></script>
+    <script src="../js/reservas_form.js"></script>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>
