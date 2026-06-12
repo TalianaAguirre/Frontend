@@ -1,90 +1,106 @@
-/* definición de variables */
+/* ── Variables ── */
 const productos = [];
 let producto = null;
 const productosTabla = document.getElementById('productosTB');
 
-/* definición de métodos o funciones */
+/* ── Utilidades ── */
 const getToken = () => localStorage.getItem('token');
 
-const mostrarProductos = () => {
-    const tbody = productosTabla.getElementsByTagName('tbody')[0];
+const toast = (msg, tipo = 'ok') => {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast toast-${tipo} visible`;
+    setTimeout(() => el.classList.remove('visible'), 3000);
+};
+
+/* ── Render ── */
+const mostrarProductos = (lista = productos) => {
+    const tbody = productosTabla.querySelector('tbody');
     tbody.innerHTML = '';
-    for (let item of productos) {
+    if (!lista.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;opacity:.4;padding:24px">Sin registros</td></tr>';
+        return;
+    }
+    for (const item of lista) {
         const tr = document.createElement('tr');
-
-        const nombreTd = document.createElement('td');
-        nombreTd.textContent = item.nombre;
-
-        const categoriaTd = document.createElement('td');
-        categoriaTd.textContent = item.categoria ? item.categoria.nombre : '';
-
-        const precioTd = document.createElement('td');
-        precioTd.textContent = item.precio;
-
-        const disponibleTd = document.createElement('td');
-        disponibleTd.textContent = item.disponible ? 'Sí' : 'No';
-
-        const accionesTd = document.createElement('td');
-
-        const editarBtn = document.createElement('button');
-        editarBtn.textContent = 'Editar';
-        editarBtn.addEventListener('click', () => editarProducto(item));
-
-        const eliminarBtn = document.createElement('button');
-        eliminarBtn.textContent = 'Eliminar';
-        eliminarBtn.addEventListener('click', () => eliminarProducto(item.id));
-
-        accionesTd.appendChild(editarBtn);
-        accionesTd.appendChild(eliminarBtn);
-
-        tr.appendChild(nombreTd);
-        tr.appendChild(categoriaTd);
-        tr.appendChild(precioTd);
-        tr.appendChild(disponibleTd);
-        tr.appendChild(accionesTd);
-
+        const disp = item.disponible
+            ? '<span class="badge badge-disponible">Sí</span>'
+            : '<span class="badge badge-cancelada">No</span>';
+        tr.innerHTML = `
+            <td>${item.nombre}</td>
+            <td>${item.categoria ? item.categoria.nombre : '—'}</td>
+            <td>$${Number(item.precio).toLocaleString()}</td>
+            <td>${disp}</td>
+            <td></td>
+        `;
+        const td = tr.querySelector('td:last-child');
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Editar';
+        editBtn.addEventListener('click', () => { producto = item; setProductoForm(item); document.getElementById('formTitulo').textContent = 'Editar producto'; });
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Eliminar';
+        delBtn.style.cssText = 'border-color:rgba(220,100,80,0.3);color:rgba(220,100,80,0.8)';
+        delBtn.addEventListener('click', () => { if (confirm('¿Eliminar producto?')) eliminarProducto(item.id); });
+        td.append(editBtn, delBtn);
         tbody.appendChild(tr);
     }
 };
 
-const consultarProductos = async () => {
+/* ── API ── */
+const consultarProductos = async (params = {}) => {
     try {
-        if (productos.length > 0) productos.splice(0, productos.length);
-        const response = await fetch('http://127.0.0.1:8003/api/productos', {
+        const qs = new URLSearchParams(Object.fromEntries(Object.entries(params).filter(([,v])=>v))).toString();
+        const res = await fetch(`http://127.0.0.1:8003/api/productos${qs ? '?'+qs : ''}`, {
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
-        const body = await response.json();
-        body.productos.forEach(item => productos.push(item));
+        const body = await res.json();
+        productos.splice(0, productos.length, ...(body.productos ?? []));
         mostrarProductos();
-    } catch (ex) {
-        console.error('Error en el servicio');
-    }
-    console.log('Fin del request...');
+    } catch { toast('Error al cargar productos', 'err'); }
 };
 
-const editarProducto = (value) => {
-    producto = value;
-    setProductoForm(producto);
+const cargarCategoriasFiltro = async () => {
+    try {
+        const res = await fetch('http://127.0.0.1:8003/api/categorias', {
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const body = await res.json();
+        const sel1 = document.getElementById('filtroCategoria');
+        const sel2 = document.getElementById('categoria_id');
+        (body.categorias ?? []).forEach(c => {
+            [sel1, sel2].forEach(sel => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.nombre;
+                sel.appendChild(opt.cloneNode(true));
+            });
+        });
+    } catch { toast('Error cargando categorías', 'err'); }
 };
 
 const eliminarProducto = async (id) => {
     try {
-        const response = await fetch('http://127.0.0.1:8003/api/productos/' + id, {
+        const res = await fetch(`http://127.0.0.1:8003/api/productos/${id}`, {
             method: 'delete',
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
-        const status = response.status;
-        if (status == 200) {
-            consultarProductos();
-        } else {
-            const body = await response.json();
-            alert(body.message);
-        }
-    } catch (ex) {
-        console.error('Error en el servicio');
-    }
-    console.log('Fin del request...');
+        if (res.status === 200) { toast('Producto eliminado'); consultarProductos(); }
+        else { const b = await res.json(); toast(b.message || 'Error', 'err'); }
+    } catch { toast('Error en el servicio', 'err'); }
 };
 
-/* llamado de funciones por defecto */
+/* ── Filtros / botones ── */
+document.getElementById('btnFiltrar').addEventListener('click', () => {
+    consultarProductos({
+        categoria_id: document.getElementById('filtroCategoria').value,
+        disponible:   document.getElementById('filtroDisponible').value,
+    });
+});
+document.getElementById('btnNuevo').addEventListener('click', () => {
+    document.getElementById('productoForm').reset();
+    producto = null;
+    document.getElementById('formTitulo').textContent = 'Nuevo producto';
+});
+
+/* ── Init ── */
+cargarCategoriasFiltro();
 consultarProductos();

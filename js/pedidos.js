@@ -1,107 +1,117 @@
-/* definición de variables */
+/* ── Variables ── */
 const pedidos = [];
 let pedido = null;
 const pedidosTabla = document.getElementById('pedidosTB');
 
-/* definición de métodos o funciones */
+/* ── Utilidades ── */
 const getToken = () => localStorage.getItem('token');
 
-const mostrarPedidos = () => {
-    const tbody = pedidosTabla.getElementsByTagName('tbody')[0];
+const toast = (msg, tipo = 'ok') => {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast toast-${tipo} visible`;
+    setTimeout(() => el.classList.remove('visible'), 3000);
+};
+
+const badgePedido = (estado) => {
+    const mapa = { pendiente:'Pendiente', en_preparacion:'En preparación', entregado:'Entregado', pagado:'Pagado', cancelado:'Cancelado' };
+    const badge = { pendiente:'pendiente', en_preparacion:'reservada', entregado:'confirmada', pagado:'disponible', cancelado:'cancelada' };
+    return `<span class="badge badge-${badge[estado] || 'pendiente'}">${mapa[estado] || estado}</span>`;
+};
+
+/* ── Render ── */
+const mostrarPedidos = (lista = pedidos) => {
+    const tbody = pedidosTabla.querySelector('tbody');
     tbody.innerHTML = '';
-    for (let item of pedidos) {
+    if (!lista.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;opacity:.4;padding:24px">Sin registros</td></tr>';
+        return;
+    }
+    for (const item of lista) {
         const tr = document.createElement('tr');
+        const nProds = item.detalles ? item.detalles.length : (item.cantidad_productos ?? '—');
+        tr.innerHTML = `
+            <td>#${item.id}</td>
+            <td>${item.mesa ? item.mesa.numero : item.mesa_id}</td>
+            <td>${nProds} ítem(s)</td>
+            <td>$${Number(item.total ?? 0).toLocaleString()}</td>
+            <td>${badgePedido(item.estado)}</td>
+            <td></td>
+        `;
+        const td = tr.querySelector('td:last-child');
 
-        const mesaTd = document.createElement('td');
-        mesaTd.textContent = item.mesa_id;
-
-        const fechaTd = document.createElement('td');
-        fechaTd.textContent = item.fecha;
-
-        const totalTd = document.createElement('td');
-        totalTd.textContent = item.total;
-
-        const estadoTd = document.createElement('td');
-        estadoTd.textContent = item.estado;
-
-        const accionesTd = document.createElement('td');
-
-        const verBtn = document.createElement('button');
-        verBtn.textContent = 'Ver detalle';
-        verBtn.addEventListener('click', () => verPedido(item.id));
+        if (item.estado !== 'cancelado' && item.estado !== 'pagado') {
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Editar';
+            editBtn.addEventListener('click', () => { pedido = item; document.getElementById('formTitulo').textContent = 'Editar pedido'; });
+            td.appendChild(editBtn);
+        }
 
         const estadoBtn = document.createElement('button');
-        estadoBtn.textContent = 'Cambiar estado';
+        estadoBtn.textContent = 'Estado';
         estadoBtn.addEventListener('click', () => cambiarEstadoPedido(item.id));
-
-        accionesTd.appendChild(verBtn);
-        accionesTd.appendChild(estadoBtn);
-
-        tr.appendChild(mesaTd);
-        tr.appendChild(fechaTd);
-        tr.appendChild(totalTd);
-        tr.appendChild(estadoTd);
-        tr.appendChild(accionesTd);
+        td.appendChild(estadoBtn);
 
         tbody.appendChild(tr);
     }
 };
 
-const consultarPedidos = async () => {
+/* ── API ── */
+const consultarPedidos = async (params = {}) => {
     try {
-        if (pedidos.length > 0) pedidos.splice(0, pedidos.length);
-        const response = await fetch('http://127.0.0.1:8004/api/pedidos', {
+        const qs = new URLSearchParams(Object.fromEntries(Object.entries(params).filter(([,v])=>v))).toString();
+        const res = await fetch(`http://127.0.0.1:8004/api/pedidos${qs ? '?'+qs : ''}`, {
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
-        const body = await response.json();
-        body.pedidos.forEach(item => pedidos.push(item));
+        const body = await res.json();
+        pedidos.splice(0, pedidos.length, ...(body.pedidos ?? []));
         mostrarPedidos();
-    } catch (ex) {
-        console.error('Error en el servicio');
-    }
-    console.log('Fin del request...');
+    } catch { toast('Error al cargar pedidos', 'err'); }
 };
 
-const verPedido = async (id) => {
+const cargarMesasPedido = async () => {
     try {
-        const response = await fetch('http://127.0.0.1:8004/api/pedidos/' + id, {
+        const res = await fetch('http://127.0.0.1:8002/api/mesas', {
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
-        const body = await response.json();
-        if (body.success) {
-            pedido = body.pedido;
-            alert('Pedido #' + pedido.id + ' - Total: ' + pedido.total);
-        }
-    } catch (ex) {
-        console.error('Error en el servicio');
-    }
-    console.log('Fin del request...');
+        const body = await res.json();
+        const sel = document.getElementById('mesa_id');
+        sel.innerHTML = '<option value="">— Seleccionar mesa —</option>';
+        (body.mesas ?? []).filter(m => m.estado !== 'disponible').forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.id;
+            opt.textContent = `${m.numero} — ${m.estado}`;
+            sel.appendChild(opt);
+        });
+    } catch { toast('Error cargando mesas', 'err'); }
 };
 
 const cambiarEstadoPedido = async (id) => {
-    const nuevoEstado = prompt('Nuevo estado (pendiente, en_preparacion, entregado, pagado, cancelado):');
-    if (!nuevoEstado) return;
+    const estados = ['pendiente','en_preparacion','entregado','pagado','cancelado'];
+    const nuevo = prompt(`Nuevo estado:\n${estados.join(', ')}`);
+    if (!nuevo || !estados.includes(nuevo)) return;
     try {
-        const response = await fetch('http://127.0.0.1:8004/api/pedidos/' + id + '/estado', {
+        const res = await fetch(`http://127.0.0.1:8004/api/pedidos/${id}/estado`, {
             method: 'put',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + getToken()
-            },
-            body: JSON.stringify({ estado: nuevoEstado })
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
+            body: JSON.stringify({ estado: nuevo })
         });
-        const status = response.status;
-        if (status == 200) {
-            consultarPedidos();
-        } else {
-            const body = await response.json();
-            alert(body.message);
-        }
-    } catch (ex) {
-        console.error('Error en el servicio');
-    }
-    console.log('Fin del request...');
+        if (res.status === 200) { toast('Estado actualizado'); consultarPedidos(); }
+        else { const b = await res.json(); toast(b.message || 'Error', 'err'); }
+    } catch { toast('Error en el servicio', 'err'); }
 };
 
-/* llamado de funciones por defecto */
+/* ── Filtros / botones ── */
+document.getElementById('btnFiltrar').addEventListener('click', () => {
+    consultarPedidos({ estado: document.getElementById('filtroEstado').value });
+});
+document.getElementById('btnNuevo').addEventListener('click', () => {
+    document.getElementById('pedidoForm').reset();
+    pedido = null;
+    document.getElementById('formTitulo').textContent = 'Nuevo pedido';
+    cargarMesasPedido();
+});
+
+/* ── Init ── */
+cargarMesasPedido();
 consultarPedidos();

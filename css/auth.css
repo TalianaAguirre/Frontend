@@ -1,3 +1,4 @@
+/* ── Login page specifics ── */
 main {
     position: relative;
     z-index: 1;
@@ -6,82 +7,61 @@ main {
     justify-content: center;
     min-height: 100vh;
 }
-
-h1 {
+.content { text-align: center; }
+.content h1 {
     font-family: 'Klarinda Playful Personal', serif;
     font-size: 3rem;
     font-weight: 800;
     color: white;
 }
-
-.subtitulo {
+.content .subtitulo {
     font-size: 1.5rem;
     margin-top: 4px;
+    margin-bottom: 28px;
     color: white;
 }
-
 .formulario {
     width: 450px;
     padding: 40px;
     background: rgb(20 20 20 / 78%);
-    border: 1px solid rgba(216, 211, 179, 0.2);
+    border: 1px solid rgba(216,211,179,0.2);
     border-radius: 25px;
     color: white;
-    line-height: 3.5;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
 }
-
-input {
+.formulario .form-titulo {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(212,183,120,0.9);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+.formulario label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: block;
+    margin-bottom: 6px;
+}
+.formulario input {
     width: 100%;
     padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius: 8px;
     color: white;
     font-size: 1rem;
+    font-family: 'Cormorant Garamond', serif;
     outline: none;
     transition: border-color 0.25s, box-shadow 0.25s;
 }
-
-input:focus {
-    border-color: rgba(212, 183, 120, 0.7);
-    box-shadow: 0 0 0 3px rgba(212, 183, 120, 0.12);
+.formulario input:focus {
+    border-color: rgba(212,183,120,0.7);
+    box-shadow: 0 0 0 3px rgba(212,183,120,0.12);
 }
-.botones {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-dorado {
-    padding: 10px 24px;
-    background: linear-gradient(135deg, #c9a84c, #a8722a);
-    border: none;
-    border-radius: 8px;
-    color: #0c0c0c;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.btn-outline {
-    padding: 10px 24px;
-    background: none;
-    border: 1px solid rgba(212, 183, 120, 0.3);
-    border-radius: 8px;
-    color: rgba(212, 183, 120, 0.8);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-.inputError {
-    font-size: 0.75rem;
-    color: #e07070;
-    display: none;
-}
+.botones { display: flex; gap: 10px; margin-top: 4px; }

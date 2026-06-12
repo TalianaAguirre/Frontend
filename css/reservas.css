@@ -1,0 +1,6 @@
+/* ── Reservas page specifics ── */
+
+/* wider layout for the richer form */
+.contenido-pagina.reservas-layout {
+    grid-template-columns: 380px 1fr;
+}
