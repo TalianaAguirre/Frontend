@@ -1,0 +1,179 @@
+.pagina-main {
+    flex: 1;
+    padding: 48px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.pagina-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.pagina-header h1 {
+    font-family: 'Klarinda Playful Personal', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: white;
+}
+
+.contenido-pagina {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Formulario interno */
+.formulario-interno {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(212,183,120,0.15);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-titulo {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(212,183,120,0.9);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+}
+
+.campo input, .campo select {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.campo input:focus, .campo select:focus {
+    border-color: rgba(212,183,120,0.7);
+    box-shadow: 0 0 0 3px rgba(212,183,120,0.1);
+}
+
+.campo select option {
+    background: #1a1a1a;
+}
+
+.botones-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.btn-dorado {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #c9a84c, #a8722a);
+    border: none;
+    border-radius: 8px;
+    color: #0c0c0c;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-dorado:hover { opacity: 0.85; }
+
+.btn-outline {
+    padding: 10px 24px;
+    background: none;
+    border: 1px solid rgba(212,183,120,0.3);
+    border-radius: 8px;
+    color: rgba(212,183,120,0.8);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-outline:hover { background: rgba(212,183,120,0.08); }
+
+.inputError {
+    font-size: 0.75rem;
+    color: #e07070;
+    display: none;
+}
+
+.inputError.visible { display: block; }
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+thead th {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(212,183,120,0.7);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(212,183,120,0.15);
+}
+
+tbody td {
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.85);
+}
+
+tbody tr:hover td {
+    background: rgba(212,183,120,0.04);
+}
+
+tbody button {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-right: 6px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+tbody button:hover {
+    border-color: rgba(212,183,120,0.5);
+    color: rgba(212,183,120,0.9);
+}
+
+.activo {
+    color: rgba(212,183,120,0.9) !important;
+}
