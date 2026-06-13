@@ -1,10 +1,8 @@
-/* ── Variables ── */
 const pedidoForm = document.forms['pedidoForm'];
 let pedido = null;
 let lineas = [];       // [{producto_id, cantidad, precio, nombre}]
 let catalogoProductos = [];
 
-/* ── Cargar catálogo ── */
 const cargarCatalogo = async () => {
     try {
         const res = await fetch('http://127.0.0.1:8003/api/productos', {
@@ -15,7 +13,6 @@ const cargarCatalogo = async () => {
     } catch { toast('Error cargando productos', 'err'); }
 };
 
-/* ── Renderizar líneas del pedido ── */
 const renderLineas = () => {
     const cont = document.getElementById('listaProductos');
     cont.innerHTML = '';
@@ -23,11 +20,11 @@ const renderLineas = () => {
 
     lineas.forEach((l, i) => {
         subtotal += l.precio * l.cantidad;
-        const div = document.createElement('div');
-        div.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px';
+
+        const fila = document.createElement('div');
+        fila.className = 'linea-pedido';
 
         const sel = document.createElement('select');
-        sel.style.cssText = 'flex:1;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:white;font-family:inherit;font-size:0.95rem;outline:none';
         catalogoProductos.forEach(p => {
             const opt = document.createElement('option');
             opt.value = p.id;
@@ -43,20 +40,19 @@ const renderLineas = () => {
 
         const qty = document.createElement('input');
         qty.type = 'number'; qty.min = 1; qty.value = l.cantidad;
-        qty.style.cssText = 'width:60px;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:white;font-family:inherit;outline:none';
         qty.addEventListener('change', () => { lineas[i].cantidad = Math.max(1, Number(qty.value)); renderLineas(); });
 
         const del = document.createElement('button');
         del.type = 'button'; del.textContent = '✕';
-        del.style.cssText = 'padding:6px 10px;background:none;border:1px solid rgba(220,100,80,0.3);border-radius:6px;color:rgba(220,100,80,0.8);cursor:pointer';
+        del.classList.add('btn-eliminar-linea');
         del.addEventListener('click', () => { lineas.splice(i, 1); renderLineas(); });
 
-        div.append(sel, qty, del);
-        cont.appendChild(div);
+        fila.append(sel, qty, del);
+        cont.appendChild(fila);
     });
 
     document.getElementById('subtotal').textContent = `$${subtotal.toLocaleString()}`;
-    document.getElementById('total').textContent     = `$${subtotal.toLocaleString()}`;
+    document.getElementById('total').textContent = `$${subtotal.toLocaleString()}`;
 };
 
 document.getElementById('btnAgregarProducto').addEventListener('click', () => {
@@ -66,13 +62,11 @@ document.getElementById('btnAgregarProducto').addEventListener('click', () => {
     renderLineas();
 });
 
-/* ── Get form data ── */
 const getPedidoForm = () => ({
     mesa_id:   Number(pedidoForm['mesa_id'].value),
     productos: lineas.map(l => ({ producto_id: l.producto_id, cantidad: l.cantidad }))
 });
 
-/* ── Validación ── */
 const validarPedido = (d) => {
     const show = (id, v) => document.getElementById(id).classList.toggle('visible', v);
     show('msgMesa',      !d.mesa_id);
@@ -80,7 +74,6 @@ const validarPedido = (d) => {
     return d.mesa_id && d.productos.length > 0;
 };
 
-/* ── API ── */
 const registrarPedido = async () => {
     try {
         const res = await fetch('http://127.0.0.1:8004/api/pedidos', {
@@ -118,7 +111,6 @@ const actualizarPedido = async () => {
     } catch { toast('Error en el servicio', 'err'); }
 };
 
-/* ── Eventos ── */
 pedidoForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const datos = getPedidoForm();
@@ -133,5 +125,4 @@ pedidoForm.addEventListener('reset', () => {
     document.querySelectorAll('.inputError').forEach(el => el.classList.remove('visible'));
 });
 
-/* ── Init ── */
 cargarCatalogo();

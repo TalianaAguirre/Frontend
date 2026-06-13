@@ -1,1 +1,5 @@
-/* ── Productos page specifics ── */
+.badge-nodisponible {
+    background: rgba(120, 120, 120, 0.15);
+    color: #888;
+    border: 1px solid rgba(120, 120, 120, 0.3);
+}

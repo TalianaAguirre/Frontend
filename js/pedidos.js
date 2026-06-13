@@ -1,9 +1,7 @@
-/* ── Variables ── */
+
 const pedidos = [];
-let pedido = null;
 const pedidosTabla = document.getElementById('pedidosTB');
 
-/* ── Utilidades ── */
 const getToken = () => localStorage.getItem('token');
 
 const toast = (msg, tipo = 'ok') => {
@@ -19,7 +17,6 @@ const badgePedido = (estado) => {
     return `<span class="badge badge-${badge[estado] || 'pendiente'}">${mapa[estado] || estado}</span>`;
 };
 
-/* ── Render ── */
 const mostrarPedidos = (lista = pedidos) => {
     const tbody = pedidosTabla.querySelector('tbody');
     tbody.innerHTML = '';
@@ -43,7 +40,20 @@ const mostrarPedidos = (lista = pedidos) => {
         if (item.estado !== 'cancelado' && item.estado !== 'pagado') {
             const editBtn = document.createElement('button');
             editBtn.textContent = 'Editar';
-            editBtn.addEventListener('click', () => { pedido = item; document.getElementById('formTitulo').textContent = 'Editar pedido'; });
+            editBtn.addEventListener('click', () => {
+    pedido = item;
+    document.getElementById('formTitulo').textContent = 'Editar pedido';
+    cargarMesasPedido().then(() => {
+        pedidoForm['mesa_id'].value = item.mesa_id;
+    });
+    lineas = (item.detalles ?? []).map(d => ({
+        producto_id: d.producto_id,
+        cantidad: d.cantidad,
+        precio: d.precio_unitario,
+        nombre: d.nombre_producto
+    }));
+    renderLineas();
+});
             td.appendChild(editBtn);
         }
 
@@ -56,7 +66,7 @@ const mostrarPedidos = (lista = pedidos) => {
     }
 };
 
-/* ── API ── */
+
 const consultarPedidos = async (params = {}) => {
     try {
         const qs = new URLSearchParams(Object.fromEntries(Object.entries(params).filter(([,v])=>v))).toString();
@@ -101,7 +111,7 @@ const cambiarEstadoPedido = async (id) => {
     } catch { toast('Error en el servicio', 'err'); }
 };
 
-/* ── Filtros / botones ── */
+
 document.getElementById('btnFiltrar').addEventListener('click', () => {
     consultarPedidos({ estado: document.getElementById('filtroEstado').value });
 });
@@ -112,6 +122,6 @@ document.getElementById('btnNuevo').addEventListener('click', () => {
     cargarMesasPedido();
 });
 
-/* ── Init ── */
+
 cargarMesasPedido();
 consultarPedidos();

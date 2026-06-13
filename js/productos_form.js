@@ -1,8 +1,8 @@
-/* ── Variables ── */
+
 const productoForm = document.forms['productoForm'];
 let producto = null;
 
-/* ── Get / Set ── */
+
 const getProductoForm = () => ({
     nombre:       productoForm['nombre'].value.trim(),
     categoria_id: Number(productoForm['categoria_id'].value),
@@ -19,7 +19,7 @@ const setProductoForm = (p) => {
     productoForm['disponible'].value   = p.disponible ? '1' : '0';
 };
 
-/* ── Validación ── */
+
 const validarProducto = (d) => {
     const show = (id, v) => document.getElementById(id).classList.toggle('visible', v);
     show('msgNombre',    !d.nombre);
@@ -28,7 +28,7 @@ const validarProducto = (d) => {
     return d.nombre && d.categoria_id && d.precio > 0;
 };
 
-/* ── API ── */
+
 const registrarProducto = async () => {
     try {
         const res = await fetch('http://127.0.0.1:8003/api/productos', {
@@ -61,10 +61,14 @@ const actualizarProducto = async () => {
             toast('Producto actualizado');
             consultarProductos();
         } else { toast(body.message || 'Error al actualizar', 'err'); }
-    } catch { toast('Error en el servicio', 'err'); }
+    } catch { 
+        
+    console.error(ex);
+
+        toast('Error en el servicio', 'err'); }
 };
 
-/* ── Eventos ── */
+
 productoForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const datos = getProductoForm();

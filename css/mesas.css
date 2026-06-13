@@ -27,7 +27,6 @@
     align-items: start;
 }
 
-/* Formulario interno */
 .formulario-interno {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(212,183,120,0.15);
@@ -59,11 +58,7 @@
     color: rgba(255,255,255,0.5);
 }
 
-<<<<<<< HEAD
 .campo input, .campo select, .campo textarea  {
-=======
-.campo input, .campo select {
->>>>>>> 79ad1e65ea208867faebe13e1bec08c425a946f6
     width: 100%;
     padding: 10px 12px;
     background: rgba(255,255,255,0.04);
@@ -132,7 +127,6 @@
 
 .inputError.visible { display: block; }
 
-/* Tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -179,9 +173,8 @@ tbody button:hover {
 }
 
 .activo {
-    color: rgba(212,183,120,0.9) !important;
+    color: rgba(212,183,120,0.9) ;
 }
-<<<<<<< HEAD
 
 .badge {
     display: inline-block;
@@ -244,5 +237,3 @@ tbody button:hover {
     font-size: 0.85rem;
     color: rgba(212,183,120,0.7);
 }
-=======
->>>>>>> 79ad1e65ea208867faebe13e1bec08c425a946f6

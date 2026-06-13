@@ -1,8 +1,8 @@
-/* definición de variables */
+
 const productos = [];
 const productosTabla = document.getElementById('productosTB');
 
-/* definición de métodos o funciones */
+
 const getToken = () => localStorage.getItem('token');
 
 const mostrarProductos = () => {
@@ -46,10 +46,13 @@ const mostrarProductos = () => {
     }
 };
 
-const consultarProductos = async () => {
+const consultarProductos = async (params = {}) => {
     try {
         if (productos.length > 0) productos.splice(0, productos.length);
-        const response = await fetch('http://127.0.0.1:8003/api/productos', {
+        const qs = new URLSearchParams(
+            Object.fromEntries(Object.entries(params).filter(([,v]) => v !== '' && v !== null))
+        ).toString();
+        const response = await fetch(`http://127.0.0.1:8003/api/productos${qs ? '?' + qs : ''}`, {
             headers: { 'Authorization': 'Bearer ' + getToken() }
         });
         const body = await response.json();
@@ -58,7 +61,6 @@ const consultarProductos = async () => {
     } catch (ex) {
         console.error('Error en el servicio');
     }
-    console.log('Fin del request...');
 };
 
 const editarProducto = (value) => {
@@ -85,5 +87,12 @@ const eliminarProducto = async (id) => {
     console.log('Fin del request...');
 };
 
-/* llamado de funciones por defecto */
+
 consultarProductos();
+
+document.getElementById('btnFiltrar').addEventListener('click', () => {
+    consultarProductos({
+        categoria_id: document.getElementById('filtroCategoria').value,
+        disponible: document.getElementById('filtroDisponible').value
+    });
+});

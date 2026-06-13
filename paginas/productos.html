@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos — Restaurante XYZ</title>
     <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/mesas.css">
     <link rel="stylesheet" href="../css/productos.css">
 </head>
@@ -43,7 +44,10 @@
                 <div class="campo">
                     <label for="categoria_id">Categoría</label>
                     <select name="categoria_id" id="categoria_id">
-                        <option value="">— Seleccionar —</option>
+                       <option value="1">Entradas</option>
+                       <option value="2">Bebidas</option>
+                       <option value="3">Platos fuertes</option>
+                       <option value="4">Postres</option>
                     </select>
                     <p id="msgCategoria" class="inputError">Seleccione una categoría</p>
                 </div>
@@ -77,6 +81,10 @@
                 <div class="filtros">
                     <select id="filtroCategoria">
                         <option value="">Todas las categorías</option>
+                        <option value="1">Entradas</option>
+                        <option value="2">Bebidas</option>
+                        <option value="3">Platos fuertes</option>
+                        <option value="4">Postres</option>
                     </select>
                     <select id="filtroDisponible">
                         <option value="">Disponibilidad</option>
@@ -106,8 +114,8 @@
 
     <div id="toast" class="toast"></div>
 
-    <script src="../js/productos.js"></script>
-    <script src="../js/productos_form.js"></script>
-    <script src="../js/dashboard.js"></script>
+<script src="../js/dashboard.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/productos_form.js"></script>
 </body>
 </html>

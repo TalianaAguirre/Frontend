@@ -1,7 +1,7 @@
-/* ── Variables ──────────────────────────────────────── */
+
 const reservaForm = document.forms['reservaForm'];
 
-/* ── Get / Set ──────────────────────────────────────── */
+
 const getReservaForm = () => ({
     nombre_cliente:    reservaForm['nombre_cliente'].value.trim(),
     telefono_cliente:  reservaForm['telefono_cliente'].value.trim(),
@@ -22,7 +22,7 @@ const setReservaForm = (r) => {
     reservaForm['observaciones'].value     = r.observaciones     ?? '';
 };
 
-/* ── Validación ─────────────────────────────────────── */
+
 const mostrarError = (id, show, msg = null) => {
     const el = document.getElementById(id);
     el.classList.toggle('visible', show);
@@ -65,7 +65,7 @@ const validar = (d) => {
     return ok;
 };
 
-/* ── API ────────────────────────────────────────────── */
+
 const registrarReserva = async () => {
     try {
         const res = await fetch('http://127.0.0.1:8002/api/reservas', {
@@ -117,12 +117,12 @@ const actualizarReserva = async () => {
     }
 };
 
-/* ── Limpiar errores ────────────────────────────────── */
+
 const limpiarErrores = () => {
     document.querySelectorAll('.inputError').forEach(el => el.classList.remove('visible'));
 };
 
-/* ── Eventos ────────────────────────────────────────── */
+
 reservaForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const datos = getReservaForm();
@@ -136,12 +136,12 @@ reservaForm.addEventListener('reset', () => {
     limpiarErrores();
 });
 
-// Validación en tiempo real campo nombre
+
 reservaForm['nombre_cliente'].addEventListener('keyup', () => {
     mostrarError('msgNombre', !reservaForm['nombre_cliente'].value.trim(), 'Campo obligatorio');
 });
 
-// Validación en tiempo real fecha
+
 reservaForm['fecha'].addEventListener('change', () => {
     const val = reservaForm['fecha'].value;
     if (!val) { mostrarError('msgFecha', true, 'Campo obligatorio'); return; }

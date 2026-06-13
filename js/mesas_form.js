@@ -1,7 +1,5 @@
-/* definición de variables */
 const mesaForm = document.forms['mesaForm'];
 
-/* definición de métodos o funciones */
 const getMesaForm = () => {
     return {
         numero: mesaForm['numero'].value,
@@ -84,7 +82,6 @@ const actualizarMesa = async () => {
     console.log('Fin del request...');
 };
 
-/* definición de eventos */
 mesaForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const datos = getMesaForm();
@@ -102,4 +99,3 @@ mesaForm['numero'].addEventListener('keyup', () => {
     validarInputs(datos);
 });
 
-/* llamado de funciones por defecto */

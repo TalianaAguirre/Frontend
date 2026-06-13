@@ -1,9 +1,7 @@
-/* definición de variables */
 const mesas = [];
 let mesa = null;
 const mesasTabla = document.getElementById('mesasTB');
 
-/* definición de métodos o funciones */
 const getToken = () => localStorage.getItem('token');
 
 const mostrarMesas = () => {
@@ -31,8 +29,14 @@ const mostrarMesas = () => {
         estadoBtn.textContent = 'Cambiar estado';
         estadoBtn.addEventListener('click', () => cambiarEstadoMesa(item.id));
 
+        const eliminarBtn = document.createElement('button');
+        eliminarBtn.textContent = 'Eliminar';
+        eliminarBtn.addEventListener('click', () => eliminarMesa(item.id));
+        accionesTd.appendChild(eliminarBtn);
+
         accionesTd.appendChild(editarBtn);
         accionesTd.appendChild(estadoBtn);
+        accionesTd.appendChild(eliminarBtn); 
 
         tr.appendChild(numeroTd);
         tr.appendChild(capacidadTd);
@@ -90,6 +94,21 @@ const cambiarEstadoMesa = async (id) => {
     }
     console.log('Fin del request...');
 };
-
-/* llamado de funciones por defecto */
+const eliminarMesa = async (id) => {
+    if (!confirm('¿Eliminar esta mesa?')) return;
+    try {
+        const response = await fetch('http://127.0.0.1:8002/api/mesas/' + id, {
+            method: 'delete',
+            headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        if (response.status === 200) {
+            consultarMesas();
+        } else {
+            const body = await response.json();
+            alert(body.message);
+        }
+    } catch (ex) {
+        console.error('Error en el servicio');
+    }
+};
 consultarMesas();

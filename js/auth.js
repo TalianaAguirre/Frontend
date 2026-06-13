@@ -1,7 +1,7 @@
-/* definición de variables */
+
 const inicioForm = document.forms['inicioForm'];
 
-/* definición de métodos o funciones */
+
 const getLoginForm = () => {
     return {
         login: inicioForm['login_user'].value,
@@ -50,7 +50,7 @@ const iniciarSesion = async () => {
     console.log('Fin del request...');
 };
 
-/* definición de eventos */
+
 inicioForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const datos = getLoginForm();
@@ -59,4 +59,3 @@ inicioForm.addEventListener('submit', (event) => {
     iniciarSesion();
 });
 
-/* llamado de funciones por defecto */

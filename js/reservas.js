@@ -1,9 +1,9 @@
-/* ── Variables ──────────────────────────────────────── */
+
 const reservas = [];
 let reserva = null;
 const reservasTabla = document.getElementById('reservasTB');
 
-/* ── Utilidades ─────────────────────────────────────── */
+
 const getToken = () => localStorage.getItem('token');
 
 const toast = (msg, tipo = 'ok') => {
@@ -23,10 +23,8 @@ const badgeEstado = (estado) => {
     return `<span class="badge badge-${estado}">${labels[estado] ?? estado}</span>`;
 };
 
-// Mapa id→numero para mostrar en la tabla sin que el backend lo anide
 const mesasMap = {};
 
-/* ── Render tabla ───────────────────────────────────── */
 const mostrarReservas = (lista = reservas) => {
     const tbody = reservasTabla.querySelector('tbody');
     tbody.innerHTML = '';
@@ -57,7 +55,7 @@ const mostrarReservas = (lista = reservas) => {
 
             const btnCancelar = document.createElement('button');
             btnCancelar.textContent = 'Cancelar';
-            btnCancelar.style.cssText = 'border-color:rgba(220,100,80,0.3);color:rgba(220,100,80,0.8)';
+            btnCancelar.classList.add('btn-cancelar-reserva');
             btnCancelar.addEventListener('click', () => {
                 if (confirm(`¿Cancelar la reserva de ${item.nombre_cliente}?`)) {
                     cancelarReserva(item.id);
@@ -72,7 +70,6 @@ const mostrarReservas = (lista = reservas) => {
     }
 };
 
-/* ── Cargar mesas ───────────────────────────────────── */
 const cargarMesas = async () => {
     try {
         const res = await fetch('http://127.0.0.1:8002/api/mesas', {
@@ -81,10 +78,10 @@ const cargarMesas = async () => {
         const body = await res.json();
         const mesas = body.mesas ?? [];
 
-        // Llenar el mapa id→numero para la tabla
+
         mesas.forEach(m => { mesasMap[m.id] = m.numero; });
 
-        // Llenar el select del formulario
+
         const sel = document.getElementById('mesa_id');
         sel.innerHTML = '<option value="">— Seleccionar mesa —</option>';
         mesas.forEach(m => {
@@ -102,7 +99,8 @@ const cargarMesas = async () => {
     }
 };
 
-/* ── API reservas ───────────────────────────────────── */
+
+
 const consultarReservas = async (params = {}) => {
     try {
         const qs = new URLSearchParams(
@@ -138,7 +136,7 @@ const cancelarReserva = async (id) => {
     }
 };
 
-/* ── Editar ─────────────────────────────────────────── */
+
 const editarReserva = (value) => {
     reserva = value;
     setReservaForm(reserva);
@@ -146,7 +144,7 @@ const editarReserva = (value) => {
     document.querySelector('.formulario-interno').scrollIntoView({ behavior: 'smooth' });
 };
 
-/* ── Filtros ────────────────────────────────────────── */
+
 document.getElementById('btnFiltrar').addEventListener('click', () => {
     consultarReservas({
         fecha:   document.getElementById('filtroFecha').value,
@@ -155,13 +153,13 @@ document.getElementById('btnFiltrar').addEventListener('click', () => {
     });
 });
 
-/* ── Botón nueva reserva ────────────────────────────── */
+
 document.getElementById('btnNueva').addEventListener('click', () => {
     document.getElementById('reservaForm').reset();
     reserva = null;
     document.getElementById('formTitulo').textContent = 'Nueva reserva';
 });
 
-/* ── Init ───────────────────────────────────────────── */
+
 cargarMesas();
 consultarReservas();

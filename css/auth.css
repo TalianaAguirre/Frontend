@@ -46,47 +46,6 @@ input {
 input:focus {
     border-color: rgba(212, 183, 120, 0.7);
     box-shadow: 0 0 0 3px rgba(212, 183, 120, 0.12);
-<<<<<<< HEAD
-=======
-}
-.botones {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-dorado {
-    padding: 10px 24px;
-    background: linear-gradient(135deg, #c9a84c, #a8722a);
-    border: none;
-    border-radius: 8px;
-    color: #0c0c0c;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.btn-outline {
-    padding: 10px 24px;
-    background: none;
-    border: 1px solid rgba(212, 183, 120, 0.3);
-    border-radius: 8px;
-    color: rgba(212, 183, 120, 0.8);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-.inputError {
-    font-size: 0.75rem;
-    color: #e07070;
-    display: none;
->>>>>>> 79ad1e65ea208867faebe13e1bec08c425a946f6
 }
 .botones {
     display: flex;

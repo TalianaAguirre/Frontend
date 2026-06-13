@@ -1,4 +1,12 @@
-/* ─── Reservas: columna del form un poco más ancha ── */
 .contenido-pagina.reservas-layout {
     grid-template-columns: 380px 1fr;
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+.btn-cancelar-reserva {
+    border-color: rgba(220, 100, 80, 0.3) !important;
+    color: rgba(220, 100, 80, 0.8) !important;
 }

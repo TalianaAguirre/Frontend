@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas — Restaurante XYZ</title>
-    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/general.css">    
+    <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/mesas.css">
     <link rel="stylesheet" href="../css/reservas.css">
+
 </head>
 <body class="interior">
 
@@ -31,7 +33,6 @@
 
         <div class="contenido-pagina reservas-layout">
 
-            <!-- ── Formulario ── -->
             <form name="reservaForm" class="formulario-interno" id="reservaForm">
                 <h2 class="form-titulo" id="formTitulo">Nueva reserva</h2>
 
@@ -84,7 +85,7 @@
                 </div>
             </form>
 
-            <!-- ── Panel derecho: filtros + tabla ── -->
+            
             <div>
                 <div class="filtros">
                     <input type="date" id="filtroFecha" placeholder="Filtrar por fecha" title="Fecha">
@@ -121,8 +122,8 @@
 
     <div id="toast" class="toast"></div>
 
+    <script src="../js/dashboard.js"></script>
     <script src="../js/reservas.js"></script>
     <script src="../js/reservas_form.js"></script>
-    <script src="../js/dashboard.js"></script>
 </body>
 </html>

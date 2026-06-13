@@ -8,7 +8,6 @@ body.interior {
     flex-direction: column;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     align-items: center;
@@ -64,7 +63,7 @@ body.interior {
     color: rgba(212, 183, 120, 1);
 }
 
-/* Dashboard */
+
 .dashboard-main {
     flex: 1;
     padding: 60px 40px;
@@ -92,7 +91,7 @@ body.interior {
     font-weight: 400;
 }
 
-/* Tarjetas */
+
 .tarjetas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -134,8 +133,4 @@ body.interior {
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.4);
     line-height: 1.5;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 79ad1e65ea208867faebe13e1bec08c425a946f6

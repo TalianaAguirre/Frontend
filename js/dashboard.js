@@ -1,7 +1,5 @@
-/* definición de variables */
 const usuario = JSON.parse(localStorage.getItem('usuario'));
 
-/* definición de métodos o funciones */
 const cargarUsuario = () => {
     if (!usuario) {
         window.location.href = '../index.html';
@@ -25,8 +23,6 @@ const cerrarSesion = async () => {
     console.log('Fin del request...');
 };
 
-/* definición de eventos */
 document.getElementById('btnLogout').addEventListener('click', cerrarSesion);
 
-/* llamado de funciones por defecto */
 cargarUsuario();
